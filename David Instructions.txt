@@ -1,15 +1,8 @@
 Project Name: David & Alex Pizzeria
-David Tasks: Create HTML & CSS For All 6 Pages
-Login - Version 1.0
-Register - Version 1.0
-Home
-Order
-Account
 
-Future State:
-API Google Map & Facebook Login
-Google Maps
+David Tasks: Create HTML & CSS For All 6 Pages - Completed 06/23/2019
 
-AJAX Menu Navigation
+*** Future State for David & Alex ***
 
-Test Update
+* API Stripe, Google Maps & Facebook Login
+* AJAX Page Navigation Through Menu
