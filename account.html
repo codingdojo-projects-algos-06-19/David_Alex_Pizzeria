@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>David & Alex Pizzeria</title>
+    <link rel="icon" type="image/png" href="images/icons/pizza.ico"/>
+    <!-- CSS Links -->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/account.css">
+</head>
+<body>
+    <header>
+        <div class="main">
+            <div class="logo">
+                <h2>D&A</h2>
+            </div>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">ORDER (0)</a></li>
+                <li class="active"><a href="#">ACCOUNT</a></li>
+                <li><a href="#">LOGOUT</a></li>
+            </ul>
+        </div>
+        <div class="split left">
+            <h1>Account Info</h1>
+            <form>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-5">
+                    <input type="first_name" class="form-control" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-5">
+                        <input type="last_name" class="form-control" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-5">
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Address</label>
+                    <div class="col-sm-5">
+                        <input type="address" class="form-control" placeholder="Address">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">City</label>
+                    <div class="col-sm-5">
+                        <input type="city" class="form-control" placeholder="City">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">State</label>
+                    <div class="col-sm-5">
+                        <select class="form-control">
+                            <option value="AL">AL</option>
+                            <option value="AK">AK</option>
+                            <option value="AR">AR</option>	
+                            <option value="AZ">AZ</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DC">DC</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="IA">IA</option>	
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="MA">MA</option>
+                            <option value="MD">MD</option>
+                            <option value="ME">ME</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MO">MO</option>	
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="NC">NC</option>	
+                            <option value="NE">NE</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>			
+                            <option value="NV">NV</option>
+                            <option value="NY">NY</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WI">WI</option>	
+                            <option value="WV">WV</option>
+                            <option value="WY">WY</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Confirm Password</label>
+                    <div class="col-sm-5">
+                        <input type="confirm_password" class="form-control" id="inputPassword3" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="form-group row" id="submit_buttons">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-danger col-md-12">DELETE</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-primary col-md-12">UPDATE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="split right">
+            <h1>Past Orders</h1>
+            <table class="table table-hover table-borderless">
+                <tbody>
+                    <tr>
+                    <td colspan="2">
+                        <p>12/31/2019</p>
+                        <p>Large - Pineapple, Onion $12.99</p>
+                    </td>
+                    <td colspan="1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="">
+                            <label class="form-check-label">
+                                Favorite
+                            </label>
+                        </div>
+                    </td>
+                    <span class="line"></span>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https: //maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

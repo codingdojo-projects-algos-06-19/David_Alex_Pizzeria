@@ -1,0 +1,121 @@
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../images/background3.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 130vh;
+}
+ul{
+    float: right;
+    list-style-type: none;
+    margin: 2rem !important;
+}
+ul li{
+    display: inline-block;
+}
+ul li a{
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: 0.6s ease;
+}
+ul li a:hover{
+    background-color: #ffffff;
+    color: #333333;
+    text-decoration: none;
+}
+ul li.active a{
+    background-color: #ffffff;
+    color: #333333;
+    font-weight: bold;
+}
+.main{
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.logo{
+    color: #ffffff;
+    float: left;
+    height: auto;
+    margin-top: 1rem;
+    width: 150px;
+}
+.logo h2{
+    font-family: 'Rock Salt', sans-serif;
+}
+h1{
+    margin-bottom: 2rem !important;
+    color: #ffffff;
+    font-size: 70px;
+    text-align: left;
+    font-weight: bold;
+}
+.btn-primary{
+    background-color: #6B8E23 !important;
+    border: none !important;
+    transition: 0.6s ease !important;
+}
+.btn-danger{
+    background-color: #FF0000 !important;
+    border: none !important;
+    transition: 0.6s ease !important;
+}
+.btn-danger:hover{
+    background-color: #FFA500 !important;
+    border: none !important;
+}
+.btn-primary:hover{
+    background-color: #66CDAA !important;
+    border: none !important;
+}
+.split {
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    z-index: 1;
+    top: 9rem;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    color: #ffffff;
+  }
+  .left {
+    left: 0;
+    margin: 0rem 0rem 2rem 5rem;
+  }
+  .right {
+    right: 0;
+    text-align: right;
+    margin-right: 10rem;
+  }
+  #submit_buttons{
+      margin-top: 2.5rem;
+  }
+.table-borderless td,
+.table-borderless th {
+    border: 0;
+}
+.line {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+    border: 0;
+    display: block;
+    height: .15rem;
+    margin: 1rem 0rem;
+}
+p{
+    margin: 0 !important;
+}
+h2, h3{
+    display: inline-block;
+}
+.h3_amount{
+    margin-left: 8rem;
+}
+.h2_amount{
+    margin-left: 7rem;
+}

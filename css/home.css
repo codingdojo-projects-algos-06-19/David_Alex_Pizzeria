@@ -1,0 +1,86 @@
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../images/background3.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 125vh;
+}
+ul{
+    float: right;
+    list-style-type: none;
+    margin: 2rem !important;
+}
+ul li{
+    display: inline-block;
+}
+ul li a{
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: 0.6s ease;
+}
+ul li a:hover{
+    background-color: #ffffff;
+    color: #333333;
+    text-decoration: none;
+}
+ul li.active a{
+    background-color: #ffffff;
+    color: #333333;
+    font-weight: bold;
+}
+.main{
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.logo{
+    color: #ffffff;
+    float: left;
+    height: auto;
+    margin-top: 1rem;
+    width: 150px;
+}
+.logo h2{
+    font-family: 'Rock Salt', sans-serif;
+}
+.title{
+    left: 50%;
+    position: absolute;
+    top: 63%;
+    transform: translate(-50%, -50%);
+}
+.title h1{
+    color: #ffffff;
+    font-size: 70px;
+    margin-bottom: 3rem;
+}
+.card{
+    width: 60rem;
+}
+.card-img-top{
+    height: 223.5px;
+    width: 298px;
+}
+.btn{
+    bottom: 0;
+    position: absolute;
+    margin: 1rem 0rem;
+}
+.btn-primary{
+    background-color: #FF4500 !important;
+    border: none !important;
+    transition: 0.6s ease !important;
+}
+.btn-primary:hover{
+    background-color: #FFA500 !important;
+    border: none !important;
+}
+.card-body{
+    padding-bottom: 3.5rem !important;
+}

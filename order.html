@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>David & Alex Pizzeria</title>
+    <link rel="icon" type="image/png" href="images/icons/pizza.ico"/>
+    <!-- CSS Links -->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/order.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <header>
+      <div class="main">
+        <div class="logo">
+          <h2>D&A</h2>
+        </div>
+        <ul>
+          <li><a href="#">HOME</a></li>
+          <li class="active"><a href="#">ORDER (0)</a></li>
+          <li><a href="#">ACCOUNT</a></li>
+          <li><a href="#">LOGOUT</a></li>
+        </ul>
+      </div>
+      <div class="title">
+        <h1>Craft-A-Pizza</h1>
+        <form>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">METHOD:</label>
+            <div class="form-group col-md-9">
+              <select id="method" class="form-control">
+                <option selected>Carry Out</option>
+                <option>Delivery</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">SIZE:</label>
+            <div class="form-group col-md-3">
+              <select id="method" class="form-control">
+                <option selected>Small</option>
+                <option>Medium</option>
+                <option>Large</option>
+                <option>X-Large</option>
+              </select>
+            </div>
+            <label class="col-sm-2 col-form-label">CRUST:</label>
+            <div class="form-group col-md-4">
+              <select id="method" class="form-control">
+                <option selected>Thin Crust</option>
+                <option>Original</option>
+                <option>Deep Dish</option>
+                <option>Stuffed</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">QUANTITY:</label>
+            <div class="form-group col-md-9">
+              <input type="text" class="form-control" id="quantity" style="text-align: center;">
+            </div>
+          </div>
+          <div class="col-sm-0">TOPPINGS:</div>
+          <br>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="form-check form-check-inline col-sm-4">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Bacon</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-5">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Banana Peppers</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-1">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Beef</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="form-check form-check-inline col-sm-4">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Black Olives</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-5">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Cheddar Cheese</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-1">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Diced Tomatoes</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="form-check form-check-inline col-sm-4">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Feta Cheese</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-5">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Green Peppers</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-1">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Ham</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="form-check form-check-inline col-sm-4">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Hot Sauce</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-5">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Italian Sausage</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-1">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Jalapeno Peppers</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="form-check form-check-inline col-sm-4">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Mushrooms</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-5">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Onions</label>
+              </div>
+              <div class="form-check form-check-inline col-sm-1">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">Pepperoni</label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary col-md-12">ADD TO ORDER</button>
+        </form>
+      </div>
+    </header>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https: //maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
