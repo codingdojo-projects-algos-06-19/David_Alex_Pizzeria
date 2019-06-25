@@ -30,17 +30,12 @@ class Users(db.Model):
     @classmethod
     def validate_registration(cls, user_info):
         is_valid = True
-        if len(user_info['name']) < 1:
+        if len(user_info['first_name']) < 1:
             is_valid = False
-            flash('Please enter your name.', 'danger')
-        if len(user_info['alias']) < 1:
+            flash('Please enter your first name.', 'danger')
+        if len(user_info['last_name']) < 1:
             is_valid = False
-            flash('Please enter an alias.', 'danger')
-        elif len(user_info['alias']) > 0:
-            for user in cls.query.all():
-                if user.alias == user_info['alias']:
-                    is_valid = False
-                    flash('Alias already exists.', 'info')
+            flash('Please enter your last name.', 'danger')
         if len(user_info['email']) < 1:
             is_valid = False
             flash('Please enter an email address.', 'danger')
@@ -105,6 +100,56 @@ class Users(db.Model):
         for user in cls.query.all():
             if user.email == new_user.email:
                 session['userid'] = user.id
+    
+        # UPDATE USER ACCOUNT VALIDATIONS
+    @classmethod
+    def update_validation(cls, user_info):
+        is_valid = True
+        current_user = cls.query.get(int(session['userid']))
+        if len(user_info['first_name']) < 1:
+            user_info['first_name'] = current_user.first_name
+        if len(user_info['last_name']) < 1:
+            user_info['last_name'] = current_user.last_name
+        if len(user_info['email']) < 1:
+            user_info['email'] = current_user.email
+        if not EMAIL_REGEX.match(user_info['email']):
+            is_valid = False
+            flash('Please enter a valid email address.', 'danger')
+        elif EMAIL_REGEX.match(user_info['email']):
+            for user in cls.query.all():
+                if user.email == user_info['email']:
+                    is_valid = False
+                    flash('Email address already registered.', 'info')
+        if len(user_info['password']) < 1:
+            is_valid = False
+            flash('Please enter a new password.', 'danger')
+        elif not PASSWORD_REGEX.match(user_info['password']):
+            is_valid = False
+            flash('Password does not meet complexity requirements.', 'danger')
+        elif user_info['password'] != user_info['confirm_password']:
+            is_valid = False
+            flash('Passwords do not match.', 'danger')
+        if len(user_info['address']) <1:
+            user_info['address'] = current_user.street_address
+        elif len(user_info['address']) < 6:
+            is_valid = False
+            flash('Please enter a valid street address.', 'danger')
+        return is_valid
+
+        # UPDATE USER ACCOUNT
+    @classmethod
+    def update_user(cls, user_info):
+        current_user = cls.query.get(int(session['userid']))
+        new_pass = bcrypt.generate_password_hash(user_info['password'])
+        current_user.first_name = user_info['first_name']
+        current_user.last_name = user_info['last_name']
+        current_user.email = user_info['email']
+        current_user.street_address = user_info['address']
+        current_user.city = user_info['city']
+        current_user.state = user_info['state']
+        current_user.password = new_pass
+        db.session.commit()
+        flash("Account information has been updated!", "Success")
 
 class Pizzas(db.Model):
     __tablename__ = "pizzas"
@@ -126,7 +171,7 @@ class Toppings(db.Model):
     __tablename__ = "toppings"
     id = db.Column(db.Integer, primary_key=True)
     topping_type = db.Column(db.String(30))
-    price = db.Column(db.Decimal)
+    price = db.Column(db.Float)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
 

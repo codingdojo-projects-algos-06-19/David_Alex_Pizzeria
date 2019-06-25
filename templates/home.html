@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>David & Alex Pizzeria</title>
-    <link rel="icon" type="image/png" href="images/icons/pizza.ico"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/pizza.ico') }}"/>
     <!-- CSS Links -->
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/home.css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
@@ -20,17 +20,17 @@
                 <h2>D&A</h2>
             </div>
             <ul>
-                <li class="active"><a href="#">HOME</a></li>
-                <li><a href="#">ORDER (0)</a></li>
-                <li><a href="#">ACCOUNT</a></li>
-                <li><a href="#">LOGOUT</a></li>
+                <li class="active"><a href="/home">HOME</a></li>
+                <li><a href="/order">ORDER (0)</a></li>
+                <li><a href="/account">ACCOUNT</a></li>
+                <li><a href="/logout">LOGOUT</a></li>
             </ul>
         </div>
         <div class="title">
             <h1>Quick Options</h1>
             <div class="card-deck">
                 <div class="card">
-                    <img class="card-img-top" src="images/supremepizza.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/supremepizza.jpg') }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Create Pizza</h5>
                         <p class="card-text">Make a grand selection from our choice of Italian farm grown and raised ingredients.</p>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <img class="card-img-top" src="images/pepperonipizza.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/pepperonipizza.jpg') }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Favorite Pizza</h5>
                         <p class="card-text">Don't feel guilty. We know, what you know you like and we're here for you.</p>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <img class="card-img-top" src="images/cheezepizza.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/cheezepizza.jpg') }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Random Order</h5>
                         <p class="card-text">So you like living on the wild side? Try something new and live a little.</p>
