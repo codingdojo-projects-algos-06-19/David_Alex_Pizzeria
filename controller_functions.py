@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, session
 from config import db, migrate
-from models import Users, Pizzas, Crusts, Toppings, States
+from models import Users, Pizzas, Toppings
 
 # Index, Login and Registration
 
@@ -8,8 +8,7 @@ def index():
     return render_template("index.html")
 
 def registration_page():
-    all_states = States.query.all()
-    return render_template("register.html", states=all_states)
+    return render_template("register.html")
 
 def register():
     is_valid = Users.validate_registration(request.form)
@@ -61,6 +60,17 @@ def order():
     else:
         return redirect("/")
 
+def add_pizza():
+    if "userid" in session:
+        current_user = Users.query.get(int(session['userid']))
+        print(request.form['method'])
+        print(request.form['size'])
+        print(request.form['crust'])
+        print(request.form['quantity'])
+        print(request.form.getlist('topping'))
+        return redirect("/order")
+    else:
+        return redirect("/")
 
 # Logout
 

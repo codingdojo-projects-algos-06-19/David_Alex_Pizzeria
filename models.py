@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from config import db, bcrypt, migrate
 from datetime import datetime
 
+import random
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
     # Password requires 8-16 characters length, capital and lowercase letters, and special characters.
@@ -11,6 +12,10 @@ PASSWORD_REGEX = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]
 favorites = db.Table("favorites",
             db.Column("user_id", db.Integer, db.ForeignKey("users.id"), primary_key=True),
             db.Column("pizza_id", db.Integer, db.ForeignKey("pizzas.id"), primary_key=True))
+
+pizza_has_toppings = db.Table("pizza_has_toppings",
+                     db.Column("pizza_id", db.Integer, db.ForeignKey("pizzas.id"), primary_key=True),
+                     db.Column("topping_id", db.Integer, db.ForeignKey("toppings.id"), primary_key=True))
 
 class Users(db.Model):
     __tablename__ = "users"
@@ -21,7 +26,7 @@ class Users(db.Model):
     password = db.Column(db.String(255))
     street_address = db.Column(db.String(255))
     city = db.Column(db.String(80))
-    state = db.Column(db.Integer, db.ForeignKey('states.id'), nullable=False)
+    state = db.Column(db.String(20))
     pizzas_liked = db.relationship("Pizzas", secondary=favorites)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
@@ -81,6 +86,8 @@ class Users(db.Model):
                     match += 1
                     this_user = user
                     session['userid'] = user.id
+                    session['order'] = []
+                    session['ordercount'] = 0
             if match < 1:
                 is_valid=False
                 flash("Email address is not registered.", "danger")
@@ -100,6 +107,8 @@ class Users(db.Model):
         for user in cls.query.all():
             if user.email == new_user.email:
                 session['userid'] = user.id
+                session['order'] = []
+                session['ordercount'] = 0
     
         # UPDATE USER ACCOUNT VALIDATIONS
     @classmethod
@@ -154,30 +163,52 @@ class Users(db.Model):
 class Pizzas(db.Model):
     __tablename__ = "pizzas"
     id = db.Column(db.Integer, primary_key=True)
-    crust = db.Column(db.Integer, db.ForeignKey("crusts.id"), nullable=False)
-    topping = db.Column(db.Integer, db.ForeignKey("toppings.id"), nullable=False)
+    crust = db.Column(db.String(14))
     users_who_like = db.relationship("Users", secondary=favorites)
+    toppings = db.relationship("Toppings", secondary=pizza_has_toppings)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
 
-class Crusts(db.Model):
-    __tablename__ = "crusts"
-    id = db.Column(db.Integer, primary_key=True)
-    crust_type = db.Column(db.String(30))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow())
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow())
+# Add new pizza to order
+    @classmethod
+    def add_pizza(cls, user_info):
+        current_user = Users.query.get(int(session['userid']))
+        newPizza = cls(crust=user_info['crust'], topping=user_info.getlist('topping'))
+        db.session.add(newPizza)
+        db.session.commit()
+        for pizza in cls.query.all():
+            if pizza.crust == newPizza.crust and pizza.toppings == newPizza.toppings:
+                pizza.users_who_like = session['userid']
+                current_user.pizzas_liked = pizza.id
+        session['order'] += newPizza
+        session['ordercount'] += 1
+        print(session['order'])
+        flash("Pizza added to cart!", "info")
+
+# Create a random pizza
+    # @classmethod
+    # def random_pizza(cls):
+    #     random_crust = Crust.query.get(random.randint(1,3))
+    #     random_toppings = Toppings.query.get(random.randint(0,15))
+    #     newPizza = cls(crust=random_crust)
 
 class Toppings(db.Model):
     __tablename__ = "toppings"
     id = db.Column(db.Integer, primary_key=True)
     topping_type = db.Column(db.String(30))
     price = db.Column(db.Float)
+    pizza = db.relationship("Pizzas", secondary=pizza_has_toppings)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
+    @classmethod
+    def create_new_topping(cls, user_info):
+        newTopping = cls(topping_type=user_info['topping_name'], price=user_info['topping_price'])
+        db.session.add(newTopping)
+        db.session.commit()
 
-class States(db.Model):
-    __tablename__ = "states"
-    id = db.Column(db.Integer, primary_key=True)
-    state = db.Column(db.String(20))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow())
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow())
+# class States(db.Model):
+#     __tablename__ = "states"
+#     id = db.Column(db.Integer, primary_key=True)
+#     state = db.Column(db.String(20))
+#     created_at = db.Column(db.DateTime, default=datetime.utcnow())
+#     updated_at = db.Column(db.DateTime, default=datetime.utcnow())

@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Create Pizza</h5>
                         <p class="card-text">Make a grand selection from our choice of Italian farm grown and raised ingredients.</p>
-                        <a href="#" class="btn btn-primary">NEW ORDER</a>
+                        <a href="/order" class="btn btn-primary">NEW ORDER</a>
                     </div>
                 </div>
                 <div class="card">
@@ -42,7 +42,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Favorite Pizza</h5>
                         <p class="card-text">Don't feel guilty. We know, what you know you like and we're here for you.</p>
-                        <a href="#" class="btn btn-primary">RE-ORDER MY FAVE</a>
+                        <!-- Make a path for this -->
+                        <a href="/order/{{user.pizzas_liked.pizza_id}}" class="btn btn-primary">RE-ORDER MY FAVE</a>
                     </div>
                 </div>
                 <div class="card">
@@ -50,7 +51,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Random Order</h5>
                         <p class="card-text">So you like living on the wild side? Try something new and live a little.</p>
-                        <a href="#" class="btn btn-primary">SURPRISE ME</a>
+                        <!-- Make a path for this -->
+                        <a href="/order/random" class="btn btn-primary">SURPRISE ME</a>
                     </div>
                 </div>
             </div>
