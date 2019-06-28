@@ -61,92 +61,21 @@
           </div>
           <div class="form-group row">
             <label class="col-sm-5 col-form-label">QUANTITY:</label>
-            <div class="form-group col-md-3">
-              <input type="text" class="form-control" id="quantity" name="quantity" style="text-align: center;">
+            <div class="form-group col-md-5">
+              <input type="number" class="form-control" id="quantity" value="1" name="quantity" style="text-align: center;">
             </div>
           </div>
           <div class="col-sm-0">TOPPINGS:</div>
           <br>
           <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="Bacon" name="topping" value="Bacon">
-                <label class="form-check-label" for="Bacon">Bacon</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="Banana Peppers" name="topping" value="Banana Peppers">
-                <label class="form-check-label" for="Banana Peppers">Banana Peppers</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="Beef" name="topping" value="Beef">
-                <label class="form-check-label" for="Beef">Beef</label>
-              </div>
+            <div class="col-sm-14">
+              {% for topping in toppings %}
+                <div class="form-check form-check-inline col-sm-4">
+                  <input class="form-check-input" type="checkbox" id="{{topping.topping}}" name="topping" value="{{topping.id}}">
+                  <label class="form-check-label" for="{{topping.topping}}">{{topping.topping}}</label>
+                </div>
+              {% endfor %}
             </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="Black Olives" name="topping" value="Black Olives">
-                <label class="form-check-label" for="Black Olives">Black Olives</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="Cheddar Cheese" name="topping" value="Cheddar Cheese">
-                <label class="form-check-label" for="Cheddar Cheese">Cheddar Cheese</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="Diced Tomatoes" name="topping" value="Diced Tomatoes">
-                <label class="form-check-label" for="Diced Tomatoes">Diced Tomatoes</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="Feta Cheese" name="topping" value="Feta Cheese">
-                <label class="form-check-label" for="Feta Cheese">Feta Cheese</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="Green Peppers" name="topping" value="Green Peppers">
-                <label class="form-check-label" for="Green Peppers">Green Peppers</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="Ham" name="topping" value="Ham">
-                <label class="form-check-label" for="Ham">Ham</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="Hot Sauce" name="topping" value="Hot Sauce">
-                <label class="form-check-label" for="Hot Sauce">Hot Sauce</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="Italian Sausage" name="topping" value="Italian Sausage">
-                <label class="form-check-label" for="Italian Sausage">Italian Sausage</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="Jalapeno Peppers" name="topping" value="Jalapeno Peppers">
-                <label class="form-check-label" for="Jalapeno Peppers">Jalapeno Peppers</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="Mushrooms" name="topping" value="Mushrooms">
-                <label class="form-check-label" for="Mushrooms">Mushrooms</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="Onions" name="topping" value="Onions">
-                <label class="form-check-label" for="Onions">Onions</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="Pepperoni" name="topping" value="Pepperoni">
-                <label class="form-check-label" for="Pepperoni">Pepperoni</label>
-              </div>
-            </div>
-          </div>
           <button type="submit" class="btn btn-primary col-md-12">ADD TO ORDER</button>
         </form>
       </div>

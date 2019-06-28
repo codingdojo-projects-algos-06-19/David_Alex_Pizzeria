@@ -182,7 +182,6 @@ class Pizzas(db.Model):
                 current_user.pizzas_liked = pizza.id
         session['order'] += newPizza
         session['ordercount'] += 1
-        print(session['order'])
         flash("Pizza added to cart!", "info")
 
 # Create a random pizza
@@ -195,20 +194,26 @@ class Pizzas(db.Model):
 class Toppings(db.Model):
     __tablename__ = "toppings"
     id = db.Column(db.Integer, primary_key=True)
-    topping_type = db.Column(db.String(30))
+    topping = db.Column(db.String(255))
     price = db.Column(db.Float)
     pizza = db.relationship("Pizzas", secondary=pizza_has_toppings)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
     @classmethod
-    def create_new_topping(cls, user_info):
-        newTopping = cls(topping_type=user_info['topping_name'], price=user_info['topping_price'])
-        db.session.add(newTopping)
+    def add_topping(cls, user_info):
+        try:
+            if len(user_info['topping']) > 1 and isinstance(float(user_info['price']), float):
+                newTopping = cls(topping=user_info['topping'], price=float(user_info['price']))
+                db.session.add(newTopping)
+                db.session.commit()
+                flash("Topping added!", "success")
+            else:
+                flash("Enter a valid topping.", "danger")
+        except:
+            flash("That's not a valid price.", "danger")
+    @classmethod
+    def delete_topping(cls, id):
+        currentTopping = cls.query.get(id)
+        db.session.delete(currentTopping)
         db.session.commit()
-
-# class States(db.Model):
-#     __tablename__ = "states"
-#     id = db.Column(db.Integer, primary_key=True)
-#     state = db.Column(db.String(20))
-#     created_at = db.Column(db.DateTime, default=datetime.utcnow())
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
+        flash("Topping deleted.", "info")

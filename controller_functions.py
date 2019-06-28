@@ -56,21 +56,34 @@ def update_user():
 def order():
     if "userid" in session:
         current_user = Users.query.get(int(session['userid']))
-        return render_template("order.html", user=current_user)
+        all_toppings = Toppings.query.all()
+        return render_template("order.html", user=current_user, toppings=all_toppings)
     else:
         return redirect("/")
 
 def add_pizza():
     if "userid" in session:
         current_user = Users.query.get(int(session['userid']))
-        print(request.form['method'])
-        print(request.form['size'])
-        print(request.form['crust'])
-        print(request.form['quantity'])
-        print(request.form.getlist('topping'))
         return redirect("/order")
     else:
         return redirect("/")
+
+# Admin Page
+ 
+def admin():
+    if "userid" in session:
+        all_toppings = Toppings.query.all()
+        return render_template("admin.html", toppings=all_toppings)
+    else:
+        return redirect("/")
+
+def add_topping():
+    Toppings.add_topping(request.form)
+    return redirect("/admin")
+
+def delete_topping(id):
+    Toppings.delete_topping(id)
+    return redirect("/admin")
 
 # Logout
 
