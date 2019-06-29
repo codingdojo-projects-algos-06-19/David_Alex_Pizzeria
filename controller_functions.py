@@ -17,7 +17,7 @@ def register():
         Users.register_user(request.form)
         return redirect("/home")
     else:
-        return redirect("/")
+        return redirect("/registration")
 
 def login():
     is_valid = Users.validate_login(request.form)

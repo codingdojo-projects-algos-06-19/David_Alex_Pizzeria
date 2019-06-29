@@ -9,23 +9,28 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+		
 		<script src="{{ url_for('static', filename='js/jquery.vide.js') }}"></script>
 		<div class="limiter">
 			<div class="container-login100">
 				<div class="wrap-login100">
 					<form class="login100-form validate-form" action="/register" method="POST">
 						<span class="login100-form-title p-b-26">David &<br>Alex<br>Pizzeria</span>
-						<div class="flashes">
+						<div>
 							{% with messages = get_flashed_messages(with_categories=True) %}
 								{% if messages %}
+								<div class="flashes">
 									<ul class="list-group">
+										<span class="errors">Registration Errors:</span>
 										{% for category, message in messages %}
 											<li class="list-group-item list-group-item-{{category}}">{{message}}</li>
 										{% endfor %}
 									</ul>
+								</div>
 								{% endif %}
 							{% endwith %}
 						</div>
@@ -46,17 +51,19 @@
 						</div>
 						<div class="wrap-input100 validate-input">
 							<label>Address</label>
-							<input class="input100" type="text" name="address">
+							<input class="input100" name="address" id="autocomplete" onFocus="geolocate()" type="text" placeholder="">
 							<span class="focus-input100"></span>
 						</div>
+							<input class="input100" type="hidden" name="street_number" id="street_number">
+							<input class="input100" type="hidden" name="address" id="route">
 						<div class="wrap-input100 validate-input" id="split80">
 							<label>City</label>
-							<input class="input100" type="text" name="city" >
+							<input class="input100" type="text" name="city" id="locality">
 							<span class="focus-input100"></span>
 						</div>
 						<div class="wrap-input100 validate-input" id="split20">
 							<label>State</label>
-							<select class="state" name="state">
+							<select class="state" name="state" id="administrative_area_level_1" >
 								<option value="AL">AL</option>
 								<option value="AK">AK</option>
 								<option value="AR">AR</option>
@@ -134,5 +141,9 @@
 				</div>
 			</div>
 		</div>
+		<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2k9Ce9_Ct3un-RjLAo_qxbVNsA09mTtw&libraries=places&callback=initAutocomplete"
+		async defer></script>
+		
 	</body>
 </html>

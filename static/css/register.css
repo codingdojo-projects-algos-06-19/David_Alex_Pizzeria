@@ -359,6 +359,21 @@ iframe {
 .wrap-login100-form-btn:hover .login100-form-bgbtn {
   left: 0;
 }
+.pac-icon {
+  width: 0;
+  background-image: none;
+}
+.errors{
+  font-weight: bold;
+}
+.flashes {
+  background-color: #FFBABA;
+  border-radius: 3px 3px 3px 3px;
+  border: 2px red solid;
+  color: #D8000C;
+  margin-bottom: 3.5rem;
+  padding: 1rem;
+}
 /*------------------------------------------------------------------
 [ Responsive ]*/
 @media (max-width: 576px) {
