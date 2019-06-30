@@ -119,9 +119,11 @@ class Users(db.Model):
         try:
             if len(user_info['first_name']) > 0:
                 session['list_to_update'].append('first_name')
+        except:
+            flash('First name must be greater than 1 character to update.', 'danger')
         try:
             if len(user_info['last_name']) > 1:
-                    session['list_to_update'].append('last_name')
+                session['list_to_update'].append('last_name')
         except:
             flash('Last name must be greater than 1 character to update.', 'danger')
         try:
