@@ -57,13 +57,17 @@ def order():
     if "userid" in session:
         current_user = Users.query.get(int(session['userid']))
         all_toppings = Toppings.query.all()
-        return render_template("order.html", user=current_user, toppings=all_toppings)
+        ordercount = session['ordercount']
+        return render_template("order.html", user=current_user, toppings=all_toppings, ordercount=ordercount)
     else:
         return redirect("/")
 
 def add_pizza():
     if "userid" in session:
         current_user = Users.query.get(int(session['userid']))
+        Pizzas.add_pizza(request.form)
+        print(session['order'])
+        print(session['ordercount'])
         return redirect("/order")
     else:
         return redirect("/")

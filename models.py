@@ -114,49 +114,84 @@ class Users(db.Model):
     @classmethod
     def update_validation(cls, user_info):
         is_valid = True
+        session['list_to_update'] = []
         current_user = cls.query.get(int(session['userid']))
-        if len(user_info['first_name']) < 1:
-            user_info['first_name'] = current_user.first_name
-        if len(user_info['last_name']) < 1:
-            user_info['last_name'] = current_user.last_name
-        if len(user_info['email']) < 1:
-            user_info['email'] = current_user.email
-        if not EMAIL_REGEX.match(user_info['email']):
-            is_valid = False
-            flash('Please enter a valid email address.', 'danger')
-        elif EMAIL_REGEX.match(user_info['email']):
-            for user in cls.query.all():
-                if user.email == user_info['email']:
+        try:
+            if len(user_info['first_name']) > 0:
+                session['list_to_update'].append('first_name')
+        try:
+            if len(user_info['last_name']) > 1:
+                    session['list_to_update'].append('last_name')
+        except:
+            flash('Last name must be greater than 1 character to update.', 'danger')
+        try:
+            if len(user_info['email']) > 0:
+                if not EMAIL_REGEX.match(user_info['email']):
                     is_valid = False
-                    flash('Email address already registered.', 'info')
-        if len(user_info['password']) < 1:
-            is_valid = False
-            flash('Please enter a new password.', 'danger')
-        elif not PASSWORD_REGEX.match(user_info['password']):
-            is_valid = False
-            flash('Password does not meet complexity requirements.', 'danger')
-        elif user_info['password'] != user_info['confirm_password']:
-            is_valid = False
-            flash('Passwords do not match.', 'danger')
-        if len(user_info['address']) <1:
-            user_info['address'] = current_user.street_address
-        elif len(user_info['address']) < 6:
-            is_valid = False
-            flash('Please enter a valid street address.', 'danger')
+                    flash('Please enter a valid email address.', 'danger')
+                elif EMAIL_REGEX.match(user_info['email']):
+                    for user in cls.query.all():
+                        if user.email == user_info['email']:
+                            is_valid = False
+                            flash('Email address already registered.', 'info')
+                else:
+                    session['list_to_update'].append('email')
+        except:
+            flash('Email not permitted.')
+        try:
+            if len(user_info['address']) > 1:
+                if len(user_info['address']) > 6:
+                    is_valid = False
+                    flash('Please enter a valid street address.', 'danger')
+                else:
+                    session['list_to_update'].append('address')
+        except:
+            flash('Address not permitted.')
+        try:
+            if len(user_info['password']) > 0:
+                if not PASSWORD_REGEX.match(user_info['password']):
+                    is_valid = False
+                    flash('Password does not meet complexity requirements.', 'danger')
+                elif user_info['password'].check_password_hash == current_user.password:
+                    is_valid = False
+                    flash('Please enter a new password.', 'danger')
+                elif user_info['password'] != user_info['confirm_password']:
+                    is_valid = False
+                    flash('Passwords do not match.', 'danger')
+                else:
+                    session['list_to_update'].append('password')
+        except:
+            flash('Password not permitted.')
+        try:
+            if len(user_info['city']) > 0:
+                if len(user_info['city']) < 2:
+                    is_valid = False
+                    flash('Enter a valid city.', 'danger')
+                else:
+                    session['list_to_update'].append('city')
+        except:
+            flash('City not permitted.')
         return is_valid
 
         # UPDATE USER ACCOUNT
     @classmethod
     def update_user(cls, user_info):
         current_user = cls.query.get(int(session['userid']))
-        new_pass = bcrypt.generate_password_hash(user_info['password'])
-        current_user.first_name = user_info['first_name']
-        current_user.last_name = user_info['last_name']
-        current_user.email = user_info['email']
-        current_user.street_address = user_info['address']
-        current_user.city = user_info['city']
+        list_to_update = session['list_to_update']
+        if 'first_name' in list_to_update:
+            current_user.first_name = user_info['first_name']
+        if 'last_name' in list_to_update:
+            current_user.last_name = user_info['last_name']
+        if 'email' in list_to_update:
+            current_user.email = user_info['email']
+        if 'address' in list_to_update:
+            current_user.street_address = user_info['address']
+        if 'city' in list_to_update:
+            current_user.city = user_info['city']
         current_user.state = user_info['state']
-        current_user.password = new_pass
+        if 'password' in list_to_update:
+            new_pass = bcrypt.generate_password_hash(user_info['password'])
+            current_user.password = new_pass
         db.session.commit()
         flash("Account information has been updated!", "Success")
 
@@ -164,6 +199,8 @@ class Pizzas(db.Model):
     __tablename__ = "pizzas"
     id = db.Column(db.Integer, primary_key=True)
     crust = db.Column(db.String(14))
+    size = db.Column(db.String(10))
+    method= db.Column(db.String(13))
     users_who_like = db.relationship("Users", secondary=favorites)
     toppings = db.relationship("Toppings", secondary=pizza_has_toppings)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
@@ -173,21 +210,24 @@ class Pizzas(db.Model):
     @classmethod
     def add_pizza(cls, user_info):
         current_user = Users.query.get(int(session['userid']))
-        newPizza = cls(crust=user_info['crust'], topping=user_info.getlist('topping'))
+        all_pizzas = cls.query.all()
+        newPizza = cls(crust=user_info['crust'], size=user_info['size'], method=user_info['method'])
         db.session.add(newPizza)
         db.session.commit()
-        for pizza in cls.query.all():
-            if pizza.crust == newPizza.crust and pizza.toppings == newPizza.toppings:
-                pizza.users_who_like = session['userid']
-                current_user.pizzas_liked = pizza.id
-        session['order'] += newPizza
-        session['ordercount'] += 1
+        for pizza in all_pizzas:
+            if pizza.id == newPizza.id:
+                for topping in user_info['toppings']:
+                    pizza.toppings.append(topping)
+                db.session.commit()
+                session['order'].append(pizza)
+                session['ordercount'] += 1
         flash("Pizza added to cart!", "info")
 
 # Create a random pizza
     # @classmethod
     # def random_pizza(cls):
-    #     random_crust = Crust.query.get(random.randint(1,3))
+    #     random_crust = random.randint(1,3)
+    #     random_size = 
     #     random_toppings = Toppings.query.get(random.randint(0,15))
     #     newPizza = cls(crust=random_crust)
 

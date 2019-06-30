@@ -20,12 +20,23 @@
         </div>
         <ul>
           <li><a href="/home">HOME</a></li>
-          <li class="active"><a href="/order">ORDER (0)</a></li>
+          <li class="active"><a href="/order">ORDER ({{ordercount}})</a></li>
           <li><a href="/account">ACCOUNT</a></li>
           <li><a href="/logout">LOGOUT</a></li>
         </ul>
       </div>
       <div class="title">
+        <div class="flashes">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul class="list-group">
+                        {% for category, message in messages %}
+                            <li class="list-group-item list-group-item-{{category}}">{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
         <h1>Craft-A-Pizza</h1>
         <form action="/add_pizza" method="POST">
           <div class="form-group row">
@@ -70,7 +81,7 @@
           <div class="form-group row">
             <div class="col-sm-14">
               {% for topping in toppings %}
-                <div class="form-check form-check-inline col-sm-4">
+                <div class="form-check form-check-inline col-sm-3">
                   <input class="form-check-input" type="checkbox" id="{{topping.topping}}" name="topping" value="{{topping.id}}">
                   <label class="form-check-label" for="{{topping.topping}}">{{topping.topping}}</label>
                 </div>
