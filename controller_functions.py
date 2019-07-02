@@ -49,9 +49,7 @@ def update_user():
         is_valid = Users.update_validation(request.form)
         if is_valid:
             Users.update_user(request.form)
-            return redirect("/account")
-        else:
-            return redirect("/")
+        return redirect("/account")
     else:
         return redirect("/")
 
