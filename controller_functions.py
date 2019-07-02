@@ -45,9 +45,13 @@ def account():
         return redirect("/")
 
 def update_user():
-    if "userid" in session and Users.update_validation:
-        Users.update_user(request.form)
-        return redirect("/account")
+    if "userid" in session:
+        is_valid = Users.update_validation(request.form)
+        if is_valid:
+            Users.update_user(request.form)
+            return redirect("/account")
+        else:
+            return redirect("/")
     else:
         return redirect("/")
 

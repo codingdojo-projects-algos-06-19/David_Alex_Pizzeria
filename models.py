@@ -119,14 +119,8 @@ class Users(db.Model):
         try:
             if len(user_info['first_name']) > 0:
                 session['list_to_update'].append('first_name')
-        except:
-            flash('First name must be greater than 1 character to update.', 'danger')
-        try:
             if len(user_info['last_name']) > 1:
                 session['list_to_update'].append('last_name')
-        except:
-            flash('Last name must be greater than 1 character to update.', 'danger')
-        try:
             if len(user_info['email']) > 0:
                 if not EMAIL_REGEX.match(user_info['email']):
                     is_valid = False
@@ -138,18 +132,12 @@ class Users(db.Model):
                             flash('Email address already registered.', 'info')
                 else:
                     session['list_to_update'].append('email')
-        except:
-            flash('Email not permitted.')
-        try:
             if len(user_info['address']) > 1:
                 if len(user_info['address']) > 6:
                     is_valid = False
                     flash('Please enter a valid street address.', 'danger')
                 else:
                     session['list_to_update'].append('address')
-        except:
-            flash('Address not permitted.')
-        try:
             if len(user_info['password']) > 0:
                 if not PASSWORD_REGEX.match(user_info['password']):
                     is_valid = False
@@ -162,18 +150,15 @@ class Users(db.Model):
                     flash('Passwords do not match.', 'danger')
                 else:
                     session['list_to_update'].append('password')
-        except:
-            flash('Password not permitted.')
-        try:
             if len(user_info['city']) > 0:
                 if len(user_info['city']) < 2:
                     is_valid = False
                     flash('Enter a valid city.', 'danger')
                 else:
                     session['list_to_update'].append('city')
+            return is_valid
         except:
-            flash('City not permitted.')
-        return is_valid
+            flash("That didn't work!", 'danger')
 
         # UPDATE USER ACCOUNT
     @classmethod
@@ -195,7 +180,7 @@ class Users(db.Model):
             new_pass = bcrypt.generate_password_hash(user_info['password'])
             current_user.password = new_pass
         db.session.commit()
-        flash("Account information has been updated!", "Success")
+        flash("Account information has been updated!", "success")
 
 class Pizzas(db.Model):
     __tablename__ = "pizzas"
@@ -243,7 +228,6 @@ class Toppings(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
     @classmethod
     def add_topping(cls, user_info):
-        try:
             if len(user_info['topping']) > 1 and isinstance(float(user_info['price']), float):
                 newTopping = cls(topping=user_info['topping'], price=float(user_info['price']))
                 db.session.add(newTopping)
@@ -251,7 +235,6 @@ class Toppings(db.Model):
                 flash("Topping added!", "success")
             else:
                 flash("Enter a valid topping.", "danger")
-        except:
             flash("That's not a valid price.", "danger")
     @classmethod
     def delete_topping(cls, id):
