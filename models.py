@@ -116,52 +116,49 @@ class Users(db.Model):
         is_valid = True
         session['list_to_update'] = []
         current_user = cls.query.get(int(session['userid']))
-        try:
-            if len(user_info['first_name']) > 0:
-                session['list_to_update'].append('first_name')
-            if len(user_info['last_name']) > 0:
-                session['list_to_update'].append('last_name')
-            if len(user_info['email']) > 0:
-                print(Email_REGEX.match(user_info['email']))
-                if not EMAIL_REGEX.match(user_info['email']):
-                    is_valid = False
-                    flash('Please enter a valid email address.', 'danger')
-                elif EMAIL_REGEX.match(user_info['email']):
-                    for user in cls.query.all():
-                        if user.email == user_info['email']:
-                            is_valid = False
-                            flash('Email address already registered.', 'info')
-                else:
-                    session['list_to_update'].append('email')
-            if len(user_info['address']) > 0:
-                if len(user_info['address']) < 6:
-                    is_valid = False
-                    flash('Please enter a valid street address.', 'danger')
-                else:
-                    session['list_to_update'].append('address')
-            if len(user_info['city']) > 0:
-                if len(user_info['city']) < 2:
-                    is_valid = False
-                    flash('Enter a valid city.', 'danger')
-                else:
-                    session['list_to_update'].append('city')
-            if len(user_info['password']) > 0:
-                if not PASSWORD_REGEX.match(user_info['password']):
-                    is_valid = False
-                    flash('Password does not meet complexity requirements.', 'danger')
-                elif user_info['password'].check_password_hash == current_user.password:
-                    is_valid = False
-                    flash('Please enter a new password.', 'danger')
-                elif user_info['password'] != user_info['confirm_password']:
-                    is_valid = False
-                    flash('Passwords do not match.', 'danger')
-                else:
-                    session['list_to_update'].append('password')
-            print(session[list_to_update])
-            return is_valid
-        except:
-            is_valid = False
-            flash("That didn't work!", 'danger')
+        if len(user_info['first_name']) > 0:
+            session['list_to_update'].append('first_name')
+        if len(user_info['last_name']) > 0:
+            session['list_to_update'].append('last_name')
+        if len(user_info['email']) > 0:
+            if not EMAIL_REGEX.match(user_info['email']):
+                is_valid = False
+                flash('Please enter a valid email address.', 'danger')
+            elif EMAIL_REGEX.match(user_info['email']):
+                for user in cls.query.all():
+                    if user.email == user_info['email']:
+                        is_valid = False
+                        flash('Email address already registered.', 'info')
+                    else:
+                        session['list_to_update'].append('email')
+            else:
+                session['list_to_update'].append('email')
+        if len(user_info['address']) > 0:
+            if len(user_info['address']) < 6:
+                is_valid = False
+                flash('Please enter a valid street address.', 'danger')
+            else:
+                session['list_to_update'].append('address')
+        if len(user_info['city']) > 0:
+            if len(user_info['city']) < 2:
+                is_valid = False
+                flash('Enter a valid city.', 'danger')
+            else:
+                session['list_to_update'].append('city')
+        if len(user_info['password']) > 0:
+            if not PASSWORD_REGEX.match(user_info['password']):
+                is_valid = False
+                flash('Password does not meet complexity requirements.', 'danger')
+            elif not bcrypt.check_password_hash(current_user.password, user_info['password']):
+                is_valid = False
+                flash('Please enter a new password.', 'danger')
+            elif user_info['password'] != user_info['confirm_password']:
+                is_valid = False
+                flash('Passwords do not match.', 'danger')
+            else:
+                session['list_to_update'].append('password')
+        print(session['list_to_update'])
+        return is_valid
 
         # UPDATE USER ACCOUNT
     @classmethod
