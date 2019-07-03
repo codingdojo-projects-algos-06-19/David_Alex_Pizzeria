@@ -20,59 +20,59 @@
             </div>
             <ul>
                 <li><a href="/home">HOME</a></li>
-                <li><a href="/order">ORDER (0)</a></li>
+                <li><a href="/order">ORDER ( {{session['ordercount']}} )</a></li>
                 <li class="active"><a href="/account">ACCOUNT</a></li>
                 <li><a href="/logout">LOGOUT</a></li>
             </ul>
         </div>
+        <div class="flashes">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul class="list-group">
+                        {% for category, message in messages %}
+                            <li class="list-group-item list-group-item-{{category}}">{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
         <div class="split left">
             <h1>Account Info</h1>
-            <div class="flashes">
-                {% with messages = get_flashed_messages(with_categories=True) %}
-                    {% if messages %}
-                        <ul class="list-group">
-                            {% for category, message in messages %}
-                                <li class="list-group-item list-group-item-{{category}}">{{message}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                {% endwith %}
-            </div>
-            <form>
+            <form action="/account/update" method="POST">
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">First Name</label>
                     <div class="col-sm-5">
-                    <input type="first_name" class="form-control" placeholder="{{user.first_name}}">
+                    <input type="first_name" class="form-control" placeholder="{{user.first_name}}" name="first_name">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Last Name</label>
                     <div class="col-sm-5">
-                        <input type="last_name" class="form-control" placeholder="{{user.last_name}}">
+                        <input type="last_name" class="form-control" placeholder="{{user.last_name}}" name="last_name">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-5">
-                        <input type="email" class="form-control" placeholder="{{user.email}}">
+                        <input type="email" class="form-control" placeholder="{{user.email}}" name="email">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Address</label>
                     <div class="col-sm-5">
-                        <input type="address" class="form-control" placeholder="{{user.street_address}}">
+                        <input type="address" class="form-control" placeholder="{{user.street_address}}" name="address">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">City</label>
                     <div class="col-sm-5">
-                        <input type="city" class="form-control" placeholder="{{user.city}}">
+                        <input type="city" class="form-control" placeholder="{{user.city}}" name="city">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">State</label>
                     <div class="col-sm-5">
-                        <select class="form-control">
+                        <select class="form-control" name="state">
                             <option selected value="{{user.state}}">{{user.state}}</option>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
@@ -131,19 +131,19 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Password</label>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Confirm Password</label>
                     <div class="col-sm-5">
-                        <input type="confirm_password" class="form-control" id="inputPassword3" placeholder="Confirm Password">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="Confirm Password" name="confirm_password">
                     </div>
                 </div>
                 <div class="form-group row" id="submit_buttons">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger col-md-12">DELETE</button>
+                        <a href="/account/delete/{{user.id}}" class="btn btn-danger col-md-12">DELETE</a>
                     </div>
                     <div class="col-sm-3">
                         <button type="submit" class="btn btn-primary col-md-12">UPDATE</button>

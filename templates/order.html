@@ -20,131 +20,73 @@
         </div>
         <ul>
           <li><a href="/home">HOME</a></li>
-          <li class="active"><a href="/order">ORDER (0)</a></li>
+          <li class="active"><a href="/order">ORDER ( {{session['ordercount']}} )</a></li>
           <li><a href="/account">ACCOUNT</a></li>
           <li><a href="/logout">LOGOUT</a></li>
         </ul>
       </div>
       <div class="title">
+        <div class="flashes">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul class="list-group">
+                        {% for category, message in messages %}
+                            <li class="list-group-item list-group-item-{{category}}">{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
         <h1>Craft-A-Pizza</h1>
-        <form>
+        <form action="/add_pizza" method="POST">
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">METHOD:</label>
-            <div class="form-group col-md-9">
-              <select id="method" class="form-control">
+            <label class="col-sm-3 col-form-label">METHOD:</label>
+            <div class="form-group col-md-7">
+              <select id="method" class="form-control" name="method">
                 <option selected>Carry Out</option>
                 <option>Delivery</option>
               </select>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">SIZE:</label>
-            <div class="form-group col-md-3">
-              <select id="method" class="form-control">
-                <option selected>Small</option>
-                <option>Medium</option>
-                <option>Large</option>
-                <option>X-Large</option>
-              </select>
-            </div>
-            <label class="col-sm-2 col-form-label">CRUST:</label>
-            <div class="form-group col-md-4">
-              <select id="method" class="form-control">
-                <option selected>Thin Crust</option>
-                <option>Original</option>
-                <option>Deep Dish</option>
-                <option>Stuffed</option>
+            <label class="col-sm-3 col-form-label">SIZE:</label>
+            <div class="form-group col-md-7">
+              <select id="size" class="form-control" name="size">
+                <option selected value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xlarge">X-Large</option>
               </select>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">QUANTITY:</label>
-            <div class="form-group col-md-9">
-              <input type="text" class="form-control" id="quantity" style="text-align: center;">
+            <label class="col-sm-3 col-form-label">CRUST:</label>
+            <div class="form-group col-md-7">
+              <select id="crust" class="form-control" name="crust">
+                <option value="Thin Crust">Thin Crust</option>
+                <option selected value="Original">Original</option>
+                <option value="Deep Dish">Deep Dish</option>
+                <option value="Stuffed">Stuffed</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-5 col-form-label">QUANTITY:</label>
+            <div class="form-group col-md-5">
+              <input type="number" class="form-control" id="quantity" value="1" name="quantity" style="text-align: center;">
             </div>
           </div>
           <div class="col-sm-0">TOPPINGS:</div>
           <br>
           <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Bacon</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Banana Peppers</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Beef</label>
-              </div>
+            <div class="col-sm-14">
+              {% for topping in toppings %}
+                <div class="form-check form-check-inline col-sm-3">
+                  <input class="form-check-input" type="checkbox" id="{{topping.topping}}" name="topping" value="{{topping.id}}">
+                  <label class="form-check-label" for="{{topping.topping}}">{{topping.topping}}</label>
+                </div>
+              {% endfor %}
             </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Black Olives</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Cheddar Cheese</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Diced Tomatoes</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Feta Cheese</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Green Peppers</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Ham</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Hot Sauce</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Italian Sausage</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Jalapeno Peppers</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="form-check form-check-inline col-sm-4">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Mushrooms</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-5">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Onions</label>
-              </div>
-              <div class="form-check form-check-inline col-sm-1">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">Pepperoni</label>
-              </div>
-            </div>
-          </div>
           <button type="submit" class="btn btn-primary col-md-12">ADD TO ORDER</button>
         </form>
       </div>
