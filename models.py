@@ -196,18 +196,17 @@ class Pizzas(db.Model):
 # Add new pizza to order
     @classmethod
     def add_pizza(cls, user_info):
-        current_user = Users.query.get(int(session['userid']))
-        all_pizzas = cls.query.all()
+        added_toppings = user_info.getlist('topping')
         newPizza = cls(crust=user_info['crust'], size=user_info['size'], method=user_info['method'])
         db.session.add(newPizza)
         db.session.commit()
-        for pizza in all_pizzas:
-            if pizza.id == newPizza.id:
-                for topping in user_info['toppings']:
-                    pizza.toppings.append(topping)
-                db.session.commit()
-                session['order'].append(pizza)
-                session['ordercount'] += 1
+        this_pizza = cls.query.get(newPizza.id)
+        for topping in added_toppings:
+            this_topping =Toppings.query.get(topping)
+            this_pizza.toppings.append(this_topping)
+        db.session.commit()
+        session['order'].append(this_pizza.id)
+        session['ordercount'] += 1
         flash("Pizza added to cart!", "info")
 
 # Create a random pizza
@@ -228,14 +227,14 @@ class Toppings(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow())
     @classmethod
     def add_topping(cls, user_info):
-            if len(user_info['topping']) > 1 and isinstance(float(user_info['price']), float):
-                newTopping = cls(topping=user_info['topping'], price=float(user_info['price']))
-                db.session.add(newTopping)
-                db.session.commit()
-                flash("Topping added!", "success")
-            else:
-                flash("Enter a valid topping.", "danger")
-            flash("That's not a valid price.", "danger")
+        if len(user_info['topping']) > 0 and isinstance(float(user_info['price']), float):
+            newTopping = cls(topping=user_info['topping'], price=float(user_info['price']))
+            db.session.add(newTopping)
+            db.session.commit()
+            flash("Topping added!", "success")
+        else:
+            flash("Enter a valid topping.", "danger")
+        flash("That's not a valid price.", "danger")
     @classmethod
     def delete_topping(cls, id):
         currentTopping = cls.query.get(id)

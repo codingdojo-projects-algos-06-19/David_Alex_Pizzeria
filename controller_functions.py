@@ -64,12 +64,10 @@ def order():
     else:
         return redirect("/")
 
-def add_pizza():
+def add_pizza(method=["POST"]):
     if "userid" in session:
         current_user = Users.query.get(int(session['userid']))
         Pizzas.add_pizza(request.form)
-        print(session['order'])
-        print(session['ordercount'])
         return redirect("/order")
     else:
         return redirect("/")
