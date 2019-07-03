@@ -149,7 +149,7 @@ class Users(db.Model):
             if not PASSWORD_REGEX.match(user_info['password']):
                 is_valid = False
                 flash('Password does not meet complexity requirements.', 'danger')
-            elif not bcrypt.check_password_hash(current_user.password, user_info['password']):
+            elif bcrypt.check_password_hash(current_user.password, user_info['password']):
                 is_valid = False
                 flash('Please enter a new password.', 'danger')
             elif user_info['password'] != user_info['confirm_password']:
