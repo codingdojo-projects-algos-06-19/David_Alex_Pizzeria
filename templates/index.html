@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Login V2</title>
+		<title>David & Alex Pizzeria</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/pizza.ico') }}"/>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 		<link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
-		
 	</head>
 	<body data-vide-bg="{{ url_for('static', filename='videos/pizza') }}">
 		<div id="fb-root"></div>
@@ -20,31 +19,34 @@
 				<div class="wrap-login100">
 					<form class="login100-form validate-form" action="/login" method="POST">
 						<span class="login100-form-title p-b-26">David & Alex Pizzeria</span>
-						<div class="flashes">
+						<div>
 							{% with messages = get_flashed_messages(with_categories=True) %}
 								{% if messages %}
+								<div class="flashes">
 									<ul class="list-group">
+										<span class="errors">Login Errors:</span>
 										{% for category, message in messages %}
 											<li class="list-group-item list-group-item-{{category}}">{{message}}</li>
 										{% endfor %}
 									</ul>
+								</div>
 								{% endif %}
 							{% endwith %}
 						</div>
 						<div class="wrap-input100 validate-input">
-							<label>Email</label>
-							<input class="input100" type="text" name="email">
+							<label for="email">Email</label>
+							<input class="input100" type="text" name="email" id="email" spellcheck="false">
 							<span class="focus-input100"></span>
 						</div>
 						<div class="wrap-input100 validate-input">
-							<label>Password</label>
-							<input class="input100" type="password" name="password">
+							<label for="password">Password</label>
+							<input class="input100" type="password" id="password" name="password">
 							<span class="focus-input100"></span>
 						</div>
 						<div class="container-login100-form-btn">
 							<div class="wrap-login100-form-btn">
 								<div class="login100-form-bgbtn"></div>
-								<button class="login100-form-btn">Login</button>
+								<button type="submit" class="login100-form-btn" id="btn-submit">Login</button>
 							</div>
 						</div>
 						<div class="text-center p-t-25">

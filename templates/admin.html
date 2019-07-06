@@ -21,7 +21,7 @@
             </div>
             <ul>
                 <li class="active"><a href="/home">HOME</a></li>
-                <li><a href="/order">ORDER ( {{session['ordercount']}} )</a></li>
+                <li><a href="/order">ORDER (0)</a></li>
                 <li><a href="/account">ACCOUNT</a></li>
                 <li><a href="/logout">LOGOUT</a></li>
             </ul>
@@ -38,34 +38,24 @@
                     {% endif %}
                 {% endwith %}
             </div>
-            <h1>Quick Options</h1>
-            <div class="card-deck">
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename='images/supremepizza.jpg') }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Create Pizza</h5>
-                        <p class="card-text">Make a grand selection from our choice of Italian farm grown and raised ingredients.</p>
-                        <a href="/order" class="btn btn-primary">NEW ORDER</a>
+            <div class="card">
+                <form action="/add_topping" method="POST">
+                    <div class="form-group">
+                        <label for="topping">Topping Name: </label>
+                        <input type="text" class="form-control" name="topping" id="topping">
                     </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename='images/pepperonipizza.jpg') }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Favorite Pizza</h5>
-                        <p class="card-text">Don't feel guilty. We know, what you know you like and we're here for you.</p>
-                        <!-- Make a path for this -->
-                        <a href="/order/{{user.pizzas_liked.pizza_id}}" class="btn btn-primary">RE-ORDER MY FAVE</a>
+                    <div class="form-group">
+                        <label for="price">Price: </label>
+                        <input type="text" class="form-control" name="price" id="price">
                     </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top" src="{{ url_for('static', filename='images/cheezepizza.jpg') }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Random Order</h5>
-                        <p class="card-text">So you like living on the wild side? Try something new and live a little.</p>
-                        <!-- Make a path for this -->
-                        <a href="/order/random" class="btn btn-primary">SURPRISE ME</a>
-                    </div>
-                </div>
+                    <br><br>
+                    <input type="submit" class="btn btn-primary" value="Add Topping">
+                </form>
+            </div>
+            <div class="card">
+                {% for topping in toppings %}
+                    <p>{{topping.topping}} -- {{topping.price}} -- <a href="/delete_topping/{{topping.id}}">Delete</a></p>
+                {% endfor %}
             </div>
         </div>
     </header>
