@@ -7,9 +7,12 @@
 		<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/pizza.ico') }}"/>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
-	<link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins|Rock+Salt&display=swap" rel="stylesheet">
+		
 	</head>
 	<body data-vide-bg="{{ url_for('static', filename='videos/pizza') }}">
+		<div id="fb-root"></div>
+		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3"></script>
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 		<script src="{{ url_for('static', filename='js/jquery.vide.js') }}"></script>
 		<div class="limiter">
@@ -47,6 +50,7 @@
 						<div class="text-center p-t-25">
 							<a class="txt2" href="/registration">Sign Up</a>
 						</div>
+						<div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
 					</form>
 				</div>
 			</div>

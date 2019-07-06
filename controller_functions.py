@@ -67,3 +67,9 @@ def order():
 def logout():
     session.clear()
     return redirect("/")
+
+
+# Autofill
+
+def autofill():
+    return render_template("autofill.html")
